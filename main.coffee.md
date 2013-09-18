@@ -65,6 +65,11 @@ Getter/Setter for auth token.
         else
           token
 
+Expose the `Repository` constructor so that others can create repositories from
+raw data.
+
+      Repository: Repository
+
 Get a repository, returns a promise that will have a repository one day.
 
       repository: (fullName) ->
