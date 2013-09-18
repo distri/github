@@ -45,7 +45,15 @@
           return token;
         }
       },
-      Repository: Repository,
+      Repository: function(data) {
+        if (data == null) {
+          data = {};
+        }
+        Object.extend(data, {
+          requester: api
+        });
+        return Repository(data);
+      },
       repository: function(fullName) {
         return api("repos/" + fullName).then(function(data) {
           Object.extend(data, {
