@@ -52,7 +52,8 @@
           });
           return Repository(data);
         });
-      }
+      },
+      authorizaionUrl: Github.authorizationUrl
     };
   };
 
