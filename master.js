@@ -45,6 +45,7 @@
           return token;
         }
       },
+      Repository: Repository,
       repository: function(fullName) {
         return api("repos/" + fullName).then(function(data) {
           Object.extend(data, {
