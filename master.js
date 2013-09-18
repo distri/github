@@ -4,13 +4,14 @@
   Repository = require("./repository");
 
   Github = function(tokenPromise) {
-    var api, token;
+    var api, lastRequest, token;
     token = null;
     if (tokenPromise != null) {
       tokenPromise.then(function(tokenValue) {
         return token = tokenValue;
       });
     }
+    lastRequest = Observable();
     api = function(path, options) {
       var url;
       if (options == null) {
@@ -30,10 +31,13 @@
         type: "GET",
         dataType: 'json'
       }, options);
-      return $.ajax(options);
+      return $.ajax(options).done(function(data, status, request) {
+        return lastRequest(request);
+      }).fail(lastRequest);
     };
     return {
       api: api,
+      lastRequest: lastRequest,
       token: function(newValue) {
         if (arguments.length > 0) {
           return token = newValue;
