@@ -12,6 +12,11 @@ without it.
       
       tokenPromise?.then (tokenValue) ->
         token = tokenValue
+        
+Hold an observable for the last request so we can track things like oauth scopes
+and rate limit.
+
+      lastRequest = Observable()
 
 Make a call to the github API. The path can be either a relative path such as
 `users/STRd6` or an absolute path like `https://api.github.com/users/octocat` or
@@ -37,12 +42,20 @@ We attach our `accessToken` if present.
           type: "GET"
           dataType: 'json'
         , options
-    
-        $.ajax options
+
+Perform the ajax call and observe requests on success or failure
+
+        $.ajax(options).done (data, status, request) ->
+          lastRequest(request)
+        .fail lastRequest
 
 Publicly expose `api` method.
 
       api: api
+
+Also expose `lastRequest`.
+
+      lastRequest: lastRequest
 
 Getter/Setter for auth token.
 
