@@ -68,6 +68,8 @@ Getter/Setter for auth token.
 Get a repository, returns a promise that will have a repository one day.
 
       repository: (fullName) ->
+        # TODO: Consider returning a repository proxy immediately
+        #   may need to be weighed carefully with the tradeoffs of observables.
         # TODO: Consider creating from a full url in addition to a full name.
 
         api("repos/#{fullName}")
@@ -76,6 +78,10 @@ Get a repository, returns a promise that will have a repository one day.
             requester: api
 
           Repository(data)
+
+Expose `authorizationUrl` to instances as well.
+
+      authorizaionUrl: Github.authorizationUrl
 
 A URL that will authorize a user with the specified scope for the given app.
 
