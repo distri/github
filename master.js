@@ -1,0 +1,64 @@
+(function() {
+  var Github, Repository;
+
+  Repository = require("./repository");
+
+  Github = function(tokenPromise) {
+    var api, token;
+    token = null;
+    if (tokenPromise != null) {
+      tokenPromise.then(function(tokenValue) {
+        return token = tokenValue;
+      });
+    }
+    api = function(path, options) {
+      var url;
+      if (options == null) {
+        options = {};
+      }
+      if (path.match(/^http/)) {
+        url = path;
+      } else {
+        url = "https://api.github.com/" + path;
+      }
+      options.headers || (options.headers = {});
+      if (token) {
+        options.headers["Authorization"] = "token " + token;
+      }
+      options = Object.extend({
+        url: url,
+        type: "GET",
+        dataType: 'json'
+      }, options);
+      return $.ajax(options);
+    };
+    return {
+      api: api,
+      token: function(newValue) {
+        if (arguments.length > 0) {
+          return token = newValue;
+        } else {
+          return token;
+        }
+      },
+      repository: function(fullName) {
+        return api("repos/" + fullName).then(function(data) {
+          Object.extend(data, {
+            requester: api
+          });
+          return Repository(data);
+        });
+      }
+    };
+  };
+
+  Github.authorizationUrl = function(clientId, scope) {
+    if (scope == null) {
+      scope = "user:email";
+    }
+    return "https://github.com/login/oauth/authorize?client_id=" + clientId + "&scope=" + scope;
+  };
+
+  module.exports = Github;
+
+}).call(this);
