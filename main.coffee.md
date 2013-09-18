@@ -68,7 +68,12 @@ Getter/Setter for auth token.
 Expose the `Repository` constructor so that others can create repositories from
 raw data.
 
-      Repository: Repository
+      Repository: (data={}) -> 
+        # Use our api for the repository
+        Object.extend data,
+          requester: api
+
+        Repository(data)
 
 Get a repository, returns a promise that will have a repository one day.
 
