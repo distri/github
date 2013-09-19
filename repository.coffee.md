@@ -78,6 +78,8 @@ Get api helper methods from the api generator. With them we can do things like
         commitTree: ({branch, message, baseTree, tree}) ->
           branch ?= self.branch()
           message ?= "Updated in browser at strd6.github.io/editor"
+          
+          debugger
 
           unless tree
             throw Error("Must pass in a tree")
