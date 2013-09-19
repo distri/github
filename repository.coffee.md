@@ -1,7 +1,7 @@
 Repsoitory
 ==========
 
-`Repository` wraps the concept of a Github repository. It includes additional 
+`Repository` wraps the concept of a Github repository. It includes additional
 data for the local working copy such as the current branch.
 
 All of the methods return promises to allow for easy chaining and error
@@ -24,7 +24,7 @@ Currently the only parameter needed to initialize a repository instance is a
       # TODO: This is kind of a hack
       requester = I.requester
       delete I.requester
-      
+
       # TODO: Think about converting underscored properties to camel case in an
       # automatic and consistent way.
 
@@ -41,10 +41,10 @@ Get api helper methods from the api generator. With them we can do things like
 
         pullRequests: ->
           get "pulls"
-    
+
         createPullRequest: ({title}) ->
           head = title.dasherize()
-    
+
           self.switchToBranch(head)
           .then(self.commitEmpty)
           .then ->
@@ -52,90 +52,48 @@ Get api helper methods from the api generator. With them we can do things like
               base: I.defaultBranch
               head: head
               title: title
-    
-        initPagesBranch: ->
-          branch = "gh-pages"
-        
-          # Post an empty tree to use for the base commit
-          # TODO: Learn how to post an empty tree
-          post "git/trees",
-            tree: [{
-              mode: "1006444"
-              path: "tempest.txt"
-              content: "created by strd6.github.io/editor"
-            }]
-          .then (data) ->
-            # Create the base commit for the branch
-            post "git/commits",
-              message: "Initial gh-pages commit"
-              tree: data.sha
-          .then (data) ->
-            # Create the branch based on the base commit
-            post "git/refs",
-              ref: "refs/heads/#{branch}"
-              sha: data.sha
-          
-        writeFile: (params) ->
-          {branch, path, content, message} = params
-    
-          get "contents/#{path}",
-            ref: branch
-          .then (data) ->
-            # The file existed, so we update it using the existing sha
-            put "contents/#{path}",
-              content: content
-              sha: data.sha
-              message: message
-              branch: branch
-          , (request) ->
-            # If we fail because the gh-pages branch doesn't exist try creating it and retrying
-            if request.responseJSON?.message is "No commit found for the ref gh-pages"
-              self.initPagesBranch().then ->
-                # Trying again after creating the gh-pages branch
-                self.writeFile(params)
-            # The file didn't exist so we create a new one
-            else if request.status is 404
-              put "contents/#{path}",
-                content: content
-                message: message
-                branch: branch
-            else
-              Deferred().reject(arguments...)
-    
-        latestTree: (branch=self.branch()) ->
+
+        latestCommit: (branch=self.branch()) ->
           get("git/refs/heads/#{branch}")
           .then (data) ->
             get data.object.url
+
+        latestContent: (branch=self.branch()) ->
+          self.latestCommit(branch)
           .then (data) ->
             get "#{data.tree.url}?recursive=1"
           .then (data) ->
             files = data.tree.select (file) ->
               file.type is "blob"
-      
+
             # Gather the data for each file
             $.when.apply(null, files.map (datum) ->
               get(datum.url)
               .then (data) ->
                 Object.extend(datum, data)
             )
-          .then (results...) -> 
+          .then (results...) ->
             results
-    
-        commitTree: ({message, tree}) ->
-          branch = self.branch()
+
+        commitTree: ({branch, message, baseTree, tree}) ->
+          branch ?= self.branch()
           message ?= "Updated in browser at strd6.github.io/editor"
-          
+
           unless tree
             throw Error("Must pass in a tree")
-            
+
           # TODO: Is there a cleaner way to pass this through promises?
           latestCommitSha = null
-    
-          get("git/refs/heads/#{branch}")
+
+          self.latestCommit(branch)
           .then (data) ->
-            latestCommitSha = data.object.sha
-            
+            latestCommitSha = data.sha
+
+            if baseTree is true
+              baseTree = data.tree.sha
+
             post "git/trees",
+              baseTree: baseTree
               tree: tree
           .then (data) ->
             # Create another commit
@@ -147,40 +105,28 @@ Get api helper methods from the api generator. With them we can do things like
             # Update the branch head
             patch "git/refs/heads/#{branch}",
               sha: data.sha
-        
+
         # TODO: this is currently a hack because we can't create a pull request
         # if there are no different commits
         commitEmpty: ->
-          branch = self.branch()
-          latestCommit = null
-          
-          get("git/refs/heads/#{branch}")
-          .then (data) ->
-            get data.object.url
-          .then (data) ->
-            # Create another commit
-            post "git/commits",
-              parents: [data.sha]
-              message: "This commit intentionally left blank"
-              tree: data.tree.sha
-          .then (data) ->
-            # Update the branch head
-            patch "git/refs/heads/#{branch}",
-              sha: data.sha
-    
+          self.commitTree
+            baseTree: true
+            message: "This commit intentionally left blank"
+            tree: []
+
         switchToBranch: (branch) ->
           ref = "refs/heads/#{branch}"
-          
+
           setBranch = (data) ->
             self.branch(branch)
-            
+
             return data
-    
+
           get("git/#{ref}")
           .then setBranch # Success
           , (request) -> # Failure
             branchNotFound = (request.status is 404)
-    
+
             if branchNotFound
               # Create branch if it doesn't exist
               # Use our current branch as a base
@@ -192,49 +138,98 @@ Get api helper methods from the api generator. With them we can do things like
               .then(setBranch)
             else
               Deferred().reject(arguments...)
-    
+
         mergeInto: (branch=self.defaultBranch()) ->
           post "merges",
             base: branch
             head: self.branch()
-            
+
         pullFromBranch: (branch=self.defaultBranch()) ->
           post "merges",
             base: self.branch()
             head: branch
-    
-        publish: ({html, script, json}) ->
+
+The default branch that we publish our packaged content to.
+
+        publishBranch: ->
+          "gh-pages"
+
+Initialize the publish branch, usually `gh-pages`. We create an empty
+tree and set it as a root commit (one with no parents). Then we create
+the branch referencing that commit.
+
+        initPublishBranch: (branch=self.publishBranch()) ->
+          # Post an empty tree to use for the base commit
+          # TODO: Learn how to post an actually empty tree
+          post "git/trees",
+            tree: [{
+              mode: "1006444"
+              path: "tempest.txt"
+              content: "created by strd6.github.io/editor"
+            }]
+          .then (data) ->
+            post "git/commits",
+              message: "Initial commit"
+              tree: data.sha
+          .then (data) ->
+            # Create the branch from the base commit
+            post "git/refs",
+              ref: "refs/heads/#{branch}"
+              sha: data.sha
+
+Ensure our publish branch exists. If it is found it returns a promise that
+succeeds right away, otherwise it attempts to create it. Either way it
+returns a promise that will be fullfilled if the publish branch is legit.
+
+        ensurePublishBranch: (publishBranch=self.publishBranch()) ->
+          get("branches/#{publishBranch}")
+          .then null, (request) ->
+            if request.status is 404
+              self.initPublishBranch()
+
+Publish our package for distribution.
+
+We currently publish a `<branch>.json`, `<branch>.js`, and `<branch>.html`.
+
+The json is the self contained package for use in any other application. The js is
+an alternative for including as script tag on a page. And the html is a standalone
+demo page.
+
+If we are on the defaut branch we publish an additional `index.html` as
+a demo page.
+
+        publish: (data) ->
           branch = self.branch()
           message = "Built #{branch} in browser in strd6.github.io/editor"
-    
-          if branch is "master"
-            path = "index.html"
-          else
-            path = "#{branch}.html"
-    
+
+          name = branch
+
           # Assuming git repo with gh-pages branch
-          publishBranch = "gh-pages"
-    
-          # TODO: Make this one commit rather than a sequence of write files
-          # create <branch>.html
-          self.writeFile
-            path: path
-            content: Base64.encode(html)
-            branch: publishBranch
-            message: message
-          .then ->
-            self.writeFile
-              path: "#{branch}.js"
-              content: Base64.encode(script)
+          publishBranch = self.publishBranch()
+
+          tree = Object.keys(data).map (extension) ->
+            path: "#{name}.#{extension}"
+            content: data[extension]
+
+          if branch is self.defaultBranch()
+            tree.push
+              path: "index.html"
+              content: data.html
+
+          self.ensurePublishBranch(publishBranch).then ->
+            self.commitTree
+              baseTree: true
+              tree: tree
               branch: publishBranch
-              message: message
-          .then ->
-            self.writeFile
-              path: "#{branch}.json"
-              content: Base64.encode(json)
-              branch: publishBranch
-              message: message
-    
+
+Expose our API methods.
+
+      Object.extend self,
+        get: get
+        put: put
+        post: post
+        patch: patch
+
       return self
 
     module.exports = Repository
