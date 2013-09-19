@@ -93,7 +93,7 @@ Get api helper methods from the api generator. With them we can do things like
               baseTree = data.tree.sha
 
             post "git/trees",
-              baseTree: baseTree
+              base_tree: baseTree
               tree: tree
           .then (data) ->
             # Create another commit
