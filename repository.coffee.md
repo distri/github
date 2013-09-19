@@ -79,8 +79,6 @@ Get api helper methods from the api generator. With them we can do things like
           branch ?= self.branch()
           message ?= "Updated in browser at strd6.github.io/editor"
           
-          debugger
-
           unless tree
             throw Error("Must pass in a tree")
 
@@ -94,8 +92,6 @@ Get api helper methods from the api generator. With them we can do things like
             if baseTree is true
               baseTree = data.tree.sha
               
-            debugger
-
             post "git/trees",
               base_tree: baseTree
               tree: tree
