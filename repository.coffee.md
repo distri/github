@@ -91,6 +91,8 @@ Get api helper methods from the api generator. With them we can do things like
 
             if baseTree is true
               baseTree = data.tree.sha
+              
+            debugger
 
             post "git/trees",
               base_tree: baseTree
