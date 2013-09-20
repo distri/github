@@ -8,6 +8,12 @@ All of the methods return promises to allow for easy chaining and error
 reporting.
 
     ApiGenerator = require('./api_generator')
+    
+An emoji generator to make commits pop!
+
+    emojer = require "emojer"
+
+    emojis = "#{emojer()}#{emojer()}"
 
 Constructor
 -----------
@@ -77,7 +83,7 @@ Get api helper methods from the api generator. With them we can do things like
 
         commitTree: ({branch, message, baseTree, tree, empty}) ->
           branch ?= self.branch()
-          message ?= "Updated in browser at strd6.github.io/editor"
+          message ?= "#{emojis()} Updated in browser at strd6.github.io/editor"
 
           # TODO: Is there a cleaner way to pass this through promises?
           latestCommitSha = null
@@ -168,7 +174,7 @@ the branch referencing that commit.
             }]
           .then (data) ->
             post "git/commits",
-              message: "Initial commit"
+              message: "Initial commit #{emojis()}"
               tree: data.sha
           .then (data) ->
             # Create the branch from the base commit
@@ -199,7 +205,7 @@ a demo page.
 
         publish: (data) ->
           branch = self.branch()
-          message = "Built #{branch} in browser in strd6.github.io/editor"
+          message = "#{emojis()} Built #{branch} in browser in strd6.github.io/editor"
 
           name = branch
 
