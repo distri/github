@@ -13,7 +13,8 @@ An emoji generator to make commits pop!
 
     emojer = require "emojer"
 
-    emojis = "#{emojer()}#{emojer()}"
+    emojis = ->
+      "#{emojer()}#{emojer()}"
 
 Constructor
 -----------
