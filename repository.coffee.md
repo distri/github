@@ -8,7 +8,7 @@ All of the methods return promises to allow for easy chaining and error
 reporting.
 
     ApiGenerator = require('./api_generator')
-    
+
 An emoji generator to make commits pop!
 
     emojer = require "emojer"
