@@ -1,4 +1,4 @@
-{
+window["STRd6/github:master"]({
   "source": {
     "LICENSE": {
       "path": "LICENSE",
@@ -463,4 +463,4 @@
   "progenitor": {
     "url": "http://strd6.github.io/editor/"
   }
-}
+});
