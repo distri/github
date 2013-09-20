@@ -75,7 +75,7 @@ Get api helper methods from the api generator. With them we can do things like
           .then (results...) ->
             results
 
-        commitTree: ({branch, message, baseTree, tree}) ->
+        commitTree: ({branch, message, baseTree, tree, empty}) ->
           branch ?= self.branch()
           message ?= "Updated in browser at strd6.github.io/editor"
           
@@ -91,10 +91,15 @@ Get api helper methods from the api generator. With them we can do things like
 
             if baseTree is true
               baseTree = data.tree.sha
-              
-            post "git/trees",
-              base_tree: baseTree
-              tree: tree
+
+            debugger
+
+            if empty is true
+              Deferred().resolve(data.tree)
+            else
+              post "git/trees",
+                base_tree: baseTree
+                tree: tree
           .then (data) ->
             # Create another commit
             post "git/commits",
@@ -110,9 +115,8 @@ Get api helper methods from the api generator. With them we can do things like
         # if there are no different commits
         commitEmpty: ->
           self.commitTree
-            baseTree: true
+            empty: true
             message: "This commit intentionally left blank"
-            tree: []
 
         switchToBranch: (branch) ->
           ref = "refs/heads/#{branch}"
