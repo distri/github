@@ -61,7 +61,7 @@ Get api helper methods from the api generator. With them we can do things like
               title: title
 
         latestCommit: (branch=self.branch()) ->
-          get("git/refs/heads/#{branch}")
+          get("git/refs/heads/#{branch}#{cacheBuster()}")
           .then (data) ->
             get data.object.url
 
@@ -239,3 +239,9 @@ Expose our API methods.
       return self
 
     module.exports = Repository
+
+Helpers
+-------
+
+    cacheBuster = ->
+      "?#{+ new Date}"
