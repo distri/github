@@ -70,7 +70,7 @@ raw data.
 
       Repository: (data={}) -> 
         # Use our api for the repository
-        Object.extend data,
+        Object.defaults data,
           requester: api
 
         Repository(data)
@@ -84,7 +84,7 @@ Get a repository, returns a promise that will have a repository one day.
 
         api("repos/#{fullName}")
         .then (data) ->
-          Object.extend data,
+          Object.defaults data,
             requester: api
 
           Repository(data)
