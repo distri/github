@@ -91,7 +91,7 @@ Get a repository, returns a promise that will have a repository one day.
 
 Expose `authorizationUrl` to instances as well.
 
-      authorizaionUrl: Github.authorizationUrl
+      authorizationUrl: Github.authorizationUrl
 
 A URL that will authorize a user with the specified scope for the given app.
 

@@ -8,6 +8,9 @@ Testing our Github API wrapper. Currently super hacky, but time heals all.
         
         assert Github().Repository
 
+      it "should have authorizationUrl as an instance method", ->
+        assert Github().authorizationUrl
+
       describe "Repository", ->
 
 Hacky way to test requests. We just see if it returns a URL that looks ok.
