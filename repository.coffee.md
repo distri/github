@@ -120,6 +120,15 @@ Get api helper methods from the api generator. With them we can do things like
             empty: true
             message: "This commit intentionally left blank"
 
+Creates ref (if it doesn't already exist) using our current branch as a base.
+
+        createRef: (ref) ->
+          get("git/refs/heads/#{self.branch()}")
+          .then (data) ->
+            post "git/refs",
+              ref: ref
+              sha: data.object.sha
+
         switchToBranch: (branch) ->
           ref = "refs/heads/#{branch}"
 
@@ -134,13 +143,7 @@ Get api helper methods from the api generator. With them we can do things like
             branchNotFound = (request.status is 404)
 
             if branchNotFound
-              # Create branch if it doesn't exist
-              # Use our current branch as a base
-              get("git/refs/heads/#{self.branch()}")
-              .then (data) ->
-                post "git/refs",
-                  ref: ref
-                  sha: data.object.sha
+              self.createRef(ref)
               .then(setBranch)
             else
               Deferred().reject(arguments...)
