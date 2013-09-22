@@ -62,7 +62,7 @@
           return Repository(data);
         });
       },
-      authorizaionUrl: Github.authorizationUrl
+      authorizationUrl: Github.authorizationUrl
     };
   };
 
