@@ -11,6 +11,7 @@ without it.
       token = null
       
       tokenPromise?.then (tokenValue) ->
+        debugger
         token = tokenValue
         
 Hold an observable for the last request so we can track things like oauth scopes
