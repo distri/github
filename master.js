@@ -8,7 +8,6 @@
     token = null;
     if (tokenPromise != null) {
       tokenPromise.then(function(tokenValue) {
-        debugger;
         return token = tokenValue;
       });
     }
