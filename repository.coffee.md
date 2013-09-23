@@ -122,8 +122,8 @@ Get api helper methods from the api generator. With them we can do things like
 
 Creates ref (if it doesn't already exist) using our current branch as a base.
 
-        createRef: (ref, type="heads") ->
-          get("git/refs/#{type}/#{self.branch()}")
+        createRef: (ref) ->
+          get("git/refs/heads/#{self.branch()}")
           .then (data) ->
             post "git/refs",
               ref: ref
