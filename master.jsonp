@@ -1,5 +1,5 @@
-window["STRd6/github:master"]({
-  "version": "0.2.1-alpha.0",
+window["STRd6/github:v0.2.1-alpha.0"]({
+  "version": "0.2.1",
   "source": {
     "LICENSE": {
       "path": "LICENSE",
@@ -28,7 +28,7 @@ window["STRd6/github:master"]({
     "pixie.cson": {
       "path": "pixie.cson",
       "mode": "100644",
-      "content": "version: \"0.2.1-alpha.0\"\nwidth: 960\nheight: 800\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb.js\"\n  \"http://strd6.github.io/require/master.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:master\"\n",
+      "content": "version: \"0.2.1\"\nwidth: 960\nheight: 800\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb.js\"\n  \"http://strd6.github.io/require/master.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:master\"\n",
       "type": "blob"
     },
     "repository.coffee.md": {
@@ -471,7 +471,7 @@ window["STRd6/github:master"]({
       "pull": true
     },
     "network_count": 0,
-    "branch": "master",
+    "branch": "v0.2.1-alpha.0",
     "defaultBranch": "master",
     "includedModules": [
       "Bindable"
