@@ -207,11 +207,10 @@ demo page.
 If we are on the defaut branch we publish an additional `index.html` as
 a demo page.
 
-        publish: (data) ->
-          branch = self.branch()
+        publish: (data, ref=self.branch()) ->
           message = "#{emojis()} Built #{branch} in browser in strd6.github.io/editor"
 
-          name = branch
+          name = ref
 
           # Assuming git repo with gh-pages branch
           publishBranch = self.publishBranch()
@@ -220,7 +219,7 @@ a demo page.
             path: "#{name}.#{extension}"
             content: data[extension]
 
-          if branch is self.defaultBranch()
+          if ref is self.defaultBranch()
             tree.push
               path: "index.html"
               content: data.html
