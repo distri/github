@@ -6,10 +6,12 @@
 <script class="env" src="http://strd6.github.io/require/master.js"></script>
 </head>
 <body>
-<script>;(function(PACKAGE) {
+<script>
+;(function(PACKAGE) {
 require = Require.generateFor(PACKAGE)
 require('./main')
 })({
+  "version": "0.3.0",
   "source": {
     "LICENSE": {
       "path": "LICENSE",
@@ -38,7 +40,7 @@ require('./main')
     "pixie.cson": {
       "path": "pixie.cson",
       "mode": "100644",
-      "content": "width: 960\nheight: 800\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb.js\"\n  \"http://strd6.github.io/require/master.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:master\"\n",
+      "content": "version: \"0.3.0\"\nwidth: 960\nheight: 800\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb.js\"\n  \"http://strd6.github.io/require/master.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:master\"\n",
       "type": "blob"
     },
     "repository.coffee.md": {
@@ -387,6 +389,11 @@ require('./main')
       }
     }
   },
+  "remoteDependencies": [
+    "//code.jquery.com/jquery-1.10.1.min.js",
+    "http://strd6.github.io/tempest/javascripts/envweb.js",
+    "http://strd6.github.io/require/master.js"
+  ],
   "repository": {
     "id": 12910229,
     "name": "github",
@@ -449,14 +456,14 @@ require('./main')
     "notifications_url": "https://api.github.com/repos/STRd6/github/notifications{?since,all,participating}",
     "labels_url": "https://api.github.com/repos/STRd6/github/labels{/name}",
     "created_at": "2013-09-18T00:25:56Z",
-    "updated_at": "2013-09-23T02:33:54Z",
-    "pushed_at": "2013-09-23T02:33:54Z",
+    "updated_at": "2013-09-23T03:10:59Z",
+    "pushed_at": "2013-09-23T03:10:58Z",
     "git_url": "git://github.com/STRd6/github.git",
     "ssh_url": "git@github.com:STRd6/github.git",
     "clone_url": "https://github.com/STRd6/github.git",
     "svn_url": "https://github.com/STRd6/github",
     "homepage": null,
-    "size": 3204,
+    "size": 3296,
     "watchers_count": 0,
     "language": "CoffeeScript",
     "has_issues": true,
@@ -464,9 +471,9 @@ require('./main')
     "has_wiki": true,
     "forks_count": 0,
     "mirror_url": null,
-    "open_issues_count": 0,
+    "open_issues_count": 1,
     "forks": 0,
-    "open_issues": 0,
+    "open_issues": 1,
     "watchers": 0,
     "master_branch": "master",
     "default_branch": "master",
@@ -485,6 +492,7 @@ require('./main')
   "progenitor": {
     "url": "http://strd6.github.io/editor/"
   }
-});</script>
+});
+</script>
 </body>
 </html>
