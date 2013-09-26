@@ -53,6 +53,13 @@ Publicly expose `api` method.
 
       api: api
 
+`markdown` takes a string of source and returns a promise that will complete with
+the rendered markdown by posting it to Github. 
+
+See also: http://developer.github.com/v3/markdown/
+
+      markdown: require('./markdown')(api)
+
 Also expose `lastRequest`.
 
       lastRequest: lastRequest

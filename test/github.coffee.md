@@ -1,6 +1,6 @@
 Testing our Github API wrapper. Currently super hacky, but time heals all.
 
-    Github = require "../main"
+    window.Github = require "../main"
     
     describe "Github", ->
       it "Should be able to construct repositories", ->
