@@ -37,6 +37,7 @@
     };
     return {
       api: api,
+      markdown: require('./markdown')(api),
       lastRequest: lastRequest,
       token: function(newValue) {
         if (arguments.length > 0) {
