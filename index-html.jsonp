@@ -1,5 +1,5 @@
-window["STRd6/github:index-html"]({
-  "version": "0.3.0-alpha.1",
+window["STRd6/github:v0.3.0-alpha.1"]({
+  "version": "0.3.0",
   "source": {
     "LICENSE": {
       "path": "LICENSE",
@@ -34,7 +34,7 @@ window["STRd6/github:index-html"]({
     "pixie.cson": {
       "path": "pixie.cson",
       "mode": "100644",
-      "content": "version: \"0.3.0-alpha.1\"\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb.js\"\n  \"http://strd6.github.io/require/master.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:master\"\n",
+      "content": "version: \"0.3.0\"\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb.js\"\n  \"http://strd6.github.io/require/master.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:master\"\n",
       "type": "blob"
     },
     "repository.coffee.md": {
@@ -68,7 +68,7 @@ window["STRd6/github:index-html"]({
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.3.0-alpha.1\",\"remoteDependencies\":[\"//code.jquery.com/jquery-1.10.1.min.js\",\"http://strd6.github.io/tempest/javascripts/envweb.js\",\"http://strd6.github.io/require/master.js\"],\"dependencies\":{\"emojer\":\"STRd6/emojer:master\"}};",
+      "content": "module.exports = {\"version\":\"0.3.0\",\"remoteDependencies\":[\"//code.jquery.com/jquery-1.10.1.min.js\",\"http://strd6.github.io/tempest/javascripts/envweb.js\",\"http://strd6.github.io/require/master.js\"],\"dependencies\":{\"emojer\":\"STRd6/emojer:master\"}};",
       "type": "blob"
     },
     "repository": {
@@ -476,7 +476,7 @@ window["STRd6/github:index-html"]({
       "pull": true
     },
     "network_count": 0,
-    "branch": "index-html",
+    "branch": "v0.3.0-alpha.1",
     "defaultBranch": "master",
     "includedModules": [
       "Bindable"
