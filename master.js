@@ -77,3 +77,5 @@
   module.exports = Github;
 
 }).call(this);
+
+//# sourceURL=main.coffee
