@@ -196,33 +196,14 @@ returns a promise that will be fullfilled if the publish branch is legit.
             if request.status is 404
               self.initPublishBranch()
 
-Publish our package for distribution.
+Publish our package for distribution by taking a tree and adding it to the
+`gh-pages` branch after making sure that branch exists.
 
-We currently publish a `<branch>.json`, `<branch>.js`, and `<branch>.html`.
-
-The json is the self contained package for use in any other application. The js is
-an alternative for including as script tag on a page. And the html is a standalone
-demo page.
-
-If we are on the defaut branch we publish an additional `index.html` as
-a demo page.
-
-        publish: (data, ref=self.branch()) ->
+        publish: (tree, ref=self.branch()) ->
           message = "#{emojis()} Built #{ref} in browser in strd6.github.io/editor"
-
-          name = ref
 
           # Assuming git repo with gh-pages branch
           publishBranch = self.publishBranch()
-
-          tree = Object.keys(data).map (extension) ->
-            path: "#{name}.#{extension}"
-            content: data[extension]
-
-          if ref is self.defaultBranch()
-            tree.push
-              path: "index.html"
-              content: data.html
 
           self.ensurePublishBranch(publishBranch).then ->
             self.commitTree
