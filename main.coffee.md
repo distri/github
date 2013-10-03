@@ -9,7 +9,7 @@ Our OAuth token for making API requests. We can still make anonymous requests
 without it.
 
       token = null
-      
+
       tokenPromise?.then (tokenValue) ->
         token = tokenValue
 
@@ -31,12 +31,12 @@ We attach our `accessToken` if present.
           url = path
         else
           url = "https://api.github.com/#{path}"
-        
+
         options.headers ||= {}
-        
+
         if token
           options.headers["Authorization"] = "token #{token}"
-    
+
         options = Object.extend
           url: url
           type: "GET"
@@ -54,7 +54,7 @@ Publicly expose `api` method.
       api: api
 
 `markdown` takes a string of source and returns a promise that will complete with
-the rendered markdown by posting it to Github. 
+the rendered markdown by posting it to Github.
 
 See also: http://developer.github.com/v3/markdown/
 
@@ -75,7 +75,7 @@ Getter/Setter for auth token.
 Expose the `Repository` constructor so that others can create repositories from
 raw data.
 
-      Repository: (data={}) -> 
+      Repository: (data={}) ->
         # Use our api for the repository
         Object.defaults data,
           requester: api
