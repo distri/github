@@ -85,6 +85,14 @@ Get api helper methods from the api generator. With them we can do things like
         commitTree: ({branch, message, baseTree, tree, empty}) ->
           branch ?= self.branch()
           message ?= "#{emojis()} Updated in browser at strd6.github.io/editor"
+          
+          # TODO: Github barfs when committing blank files
+          tree = tree.filter (file) ->
+            if file.content
+              true
+            else
+              console.warn "Blank content for: ", file
+              false
 
           # TODO: Is there a cleaner way to pass this through promises?
           latestCommitSha = null
