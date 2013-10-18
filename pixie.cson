@@ -1,4 +1,4 @@
-version: "0.3.1"
+version: "0.3.2"
 remoteDependencies: [
   "//code.jquery.com/jquery-1.10.1.min.js"
   "http://strd6.github.io/tempest/javascripts/envweb.js"
