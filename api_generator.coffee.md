@@ -23,7 +23,7 @@ easily.
           url = path
         else
           url = "#{root()}/#{path}"
-              
+
         requester url, options
 
 Expose the basic api method in our returned object.

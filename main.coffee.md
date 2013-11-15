@@ -41,6 +41,7 @@ We attach our `accessToken` if present.
           url: url
           type: "GET"
           dataType: 'json'
+          contentType: "application/json; charset=utf-8"
         , options
 
 Perform the ajax call and observe requests on success or failure
