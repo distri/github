@@ -180,9 +180,10 @@ the branch referencing that commit.
           # TODO: Learn how to post an actually empty tree
           post "git/trees",
             tree: [{
+              content: "created by strd6.github.io/editor"
               mode: "100644"
               path: "tempest.txt"
-              content: "created by strd6.github.io/editor"
+              type: "blob"
             }]
           .then (data) ->
             post "git/commits",
