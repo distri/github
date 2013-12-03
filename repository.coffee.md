@@ -180,7 +180,7 @@ the branch referencing that commit.
           # TODO: Learn how to post an actually empty tree
           post "git/trees",
             tree: [{
-              mode: "1006444"
+              mode: "100644"
               path: "tempest.txt"
               content: "created by strd6.github.io/editor"
             }]
