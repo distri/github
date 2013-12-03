@@ -36,7 +36,7 @@
     "pixie.cson": {
       "path": "pixie.cson",
       "mode": "100644",
-      "content": "version: \"0.4.1\"\nremoteDependencies: [\n  \"//code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:v0.2.0\"\n",
+      "content": "version: \"0.4.1\"\nremoteDependencies: [\n  \"https://code.jquery.com/jquery-1.10.1.min.js\"\n  \"http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js\"\n]\ndependencies:\n  emojer: \"STRd6/emojer:v0.2.0\"\n",
       "type": "blob"
     },
     "repository.coffee.md": {
@@ -70,7 +70,7 @@
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.4.1\",\"remoteDependencies\":[\"//code.jquery.com/jquery-1.10.1.min.js\",\"http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js\"],\"dependencies\":{\"emojer\":\"STRd6/emojer:v0.2.0\"}};",
+      "content": "module.exports = {\"version\":\"0.4.1\",\"remoteDependencies\":[\"https://code.jquery.com/jquery-1.10.1.min.js\",\"http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js\"],\"dependencies\":{\"emojer\":\"STRd6/emojer:v0.2.0\"}};",
       "type": "blob"
     },
     "repository": {
@@ -90,7 +90,7 @@
   "version": "0.4.1",
   "entryPoint": "main",
   "remoteDependencies": [
-    "//code.jquery.com/jquery-1.10.1.min.js",
+    "https://code.jquery.com/jquery-1.10.1.min.js",
     "http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js"
   ],
   "repository": {

@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# 1386106781919
+# 1386106794013
 
 CACHE:
 index.html
-//code.jquery.com/jquery-1.10.1.min.js
+https://code.jquery.com/jquery-1.10.1.min.js
 http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js
 
 NETWORK:
