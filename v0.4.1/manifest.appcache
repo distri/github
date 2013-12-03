@@ -1,0 +1,12 @@
+CACHE MANIFEST
+# 1386106800601
+
+CACHE:
+index.html
+https://code.jquery.com/jquery-1.10.1.min.js
+http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js
+
+NETWORK:
+https://*
+http://*
+*
