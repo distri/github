@@ -24,7 +24,7 @@ Currently the only parameter needed to initialize a repository instance is a
 
     Repository = (I={}) ->
       Object.defaults I,
-        branch: "master"
+        branch: null
         default_branch: "master"
 
       # Requester only matters runtime, not real data
@@ -40,6 +40,10 @@ Currently the only parameter needed to initialize a repository instance is a
       self.defaultBranch = ->
         I.default_branch
 
+      # Initialize chosen branch to default branch
+      unless self.branch()
+        self.branch(self.defaultBranch())
+
 Get api helper methods from the api generator. With them we can do things like
 `get "branches"` to list branches of this repo.
 
@@ -47,7 +51,7 @@ Get api helper methods from the api generator. With them we can do things like
 
       self.extend
         infoDisplay: ->
-          "#{I.fullName} (#{I.branch})"
+          "#{I.fullName} (#{self.branch()})"
 
         pullRequests: ->
           get "pulls"
@@ -59,7 +63,7 @@ Get api helper methods from the api generator. With them we can do things like
           .then(self.commitEmpty)
           .then ->
             post "pulls",
-              base: I.defaultBranch
+              base: self.defaultBranch()
               head: head
               title: title
 
