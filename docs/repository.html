@@ -322,11 +322,8 @@ returns a promise that will be fullfilled if the publish branch is legit.</p>
 <code>gh-pages</code> branch after making sure that branch exists.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">    publish: (tree, ref=self.branch()) -&gt;
+            <div class="content"><pre><code class="lang-coffeescript">    publish: (tree, ref=self.branch(), publishBranch=self.publishBranch()) -&gt;
       message = <span class="string">"<span class="subst">#{emojis()}</span> Built <span class="subst">#{ref}</span> in browser in strd6.github.io/editor"</span>
-
-      <span class="comment"># Assuming git repo with gh-pages branch</span>
-      publishBranch = self.publishBranch()
 
       self.ensurePublishBranch(publishBranch).<span class="keyword">then</span> -&gt;
         self.commitTree
