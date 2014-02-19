@@ -203,7 +203,7 @@ returns a promise that will be fullfilled if the publish branch is legit.
           get("branches/#{publishBranch}")
           .then null, (request) ->
             if request.status is 404
-              self.initPublishBranch()
+              self.initPublishBranch(publishBranch)
 
 Publish our package for distribution by taking a tree and adding it to the
 `gh-pages` branch after making sure that branch exists.
