@@ -25,17 +25,20 @@ Currently the only parameter needed to initialize a repository instance is a
     Repository = (I={}) ->
       Object.defaults I,
         branch: "master"
-        defaultBranch: "master"
+        default_branch: "master"
 
       # Requester only matters runtime, not real data
       # TODO: This is kind of a hack
       requester = I.requester
       delete I.requester
 
+      self = Model(I).observeAll()
+
       # TODO: Think about converting underscored properties to camel case in an
       # automatic and consistent way.
 
-      self = Model(I).observeAll()
+      self.defaultBranch = ->
+        I.default_branch
 
 Get api helper methods from the api generator. With them we can do things like
 `get "branches"` to list branches of this repo.
