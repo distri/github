@@ -8,6 +8,8 @@ All of the methods return promises to allow for easy chaining and error
 reporting.
 
     ApiGenerator = require('./api_generator')
+    Composition = require "composition"
+    {defaults, extend} = require "./lib/util"
 
 An emoji generator to make commits pop!
 
@@ -23,7 +25,7 @@ Currently the only parameter needed to initialize a repository instance is a
 `url`. This url is used as a base for the api calls.
 
     Repository = (I={}) ->
-      Object.defaults I,
+      defaults I,
         branch: null
         default_branch: "master"
 
@@ -32,7 +34,9 @@ Currently the only parameter needed to initialize a repository instance is a
       requester = I.requester
       delete I.requester
 
-      self = Model(I).observeAll()
+      self = Composition(I)
+
+      self.attrObservable Object.keys(I)...
 
       # TODO: Think about converting underscored properties to camel case in an
       # automatic and consistent way.
@@ -84,7 +88,7 @@ Get api helper methods from the api generator. With them we can do things like
             $.when.apply(null, files.map (datum) ->
               get(datum.url)
               .then (data) ->
-                Object.extend(datum, data)
+                extend(datum, data)
             )
           .then (results...) ->
             results
@@ -226,7 +230,7 @@ Publish our package for distribution by taking a tree and adding it to the
 
 Expose our API methods.
 
-      Object.extend self,
+      extend self,
         get: get
         put: put
         post: post
