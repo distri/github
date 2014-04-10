@@ -112,7 +112,7 @@ Get api helper methods from the api generator. With them we can do things like
             else
               # TODO: Github barfs when committing blank files
               tree = tree.filter (file) ->
-                if file.content
+                if file.content or file.sha
                   true
                 else
                   console.warn "Blank content for: ", file
