@@ -11,6 +11,8 @@ reporting.
     Composition = require "composition"
     {defaults, extend} = require "./lib/util"
 
+    _ = require "./lib/underscore"
+
 An emoji generator to make commits pop!
 
     emojer = require "emojer"
@@ -110,13 +112,7 @@ Get api helper methods from the api generator. With them we can do things like
             if empty is true
               Deferred().resolve(data.tree)
             else
-              # TODO: Github barfs when committing blank files
-              tree = tree.filter (file) ->
-                if file.content or file.sha
-                  true
-                else
-                  console.warn "Blank content for: ", file
-                  false
+              tree = cleanTree(tree)
 
               post "git/trees",
                 base_tree: baseTree
@@ -245,3 +241,18 @@ Helpers
 
     cacheBuster = ->
       "?#{+ new Date}"
+
+The subset of data appropriate to push to github.
+
+    cleanTree = (data) ->
+      data.map (datum) ->
+        if datum.initialSha is datum.sha
+          _.pick datum, "path", "mode", "type", "sha" 
+        else
+          _.pick datum, "path", "mode", "type", "content"
+      .filter (file) ->
+        if file.content or file.sha
+          true
+        else
+          console.warn "Blank content for: ", file
+          false
