@@ -1,4 +1,10 @@
+Github
+======
+
     Repository = require "./repository"
+    Observable = require "observable"
+
+    {defaults, extend} = require "./lib/util"
 
 Github handles our connections to the Github API. May be optionally passed a
 promise that when fulfilled will set the authorization token.
@@ -37,7 +43,7 @@ We attach our `accessToken` if present.
         if token
           options.headers["Authorization"] = "token #{token}"
 
-        options = Object.extend
+        options = extend
           url: url
           type: "GET"
           dataType: 'json'
@@ -78,7 +84,7 @@ raw data.
 
       Repository: (data={}) ->
         # Use our api for the repository
-        Object.defaults data,
+        defaults data,
           requester: api
 
         Repository(data)
@@ -92,7 +98,7 @@ Get a repository, returns a promise that will have a repository one day.
 
         api("repos/#{fullName}")
         .then (data) ->
-          Object.defaults data,
+          defaults data,
             requester: api
 
           Repository(data)

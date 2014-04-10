@@ -1,7 +1,8 @@
-version: "0.4.2"
+version: "0.4.3-pre.1"
 remoteDependencies: [
-  "https://code.jquery.com/jquery-1.10.1.min.js"
-  "http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js"
+  "https://code.jquery.com/jquery-1.11.0.min.js"
 ]
 dependencies:
   emojer: "STRd6/emojer:v0.2.0"
+  observable: "distri/observable:v0.1.1"
+  composition: "distri/compositions:v0.1.1"
