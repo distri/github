@@ -181,7 +181,7 @@ Composition = require <span class="string">"composition"</span>
         <span class="keyword">else</span>
           <span class="comment"># TODO: Github barfs when committing blank files</span>
           tree = tree.filter (file) -&gt;
-            <span class="keyword">if</span> file.content
+            <span class="keyword">if</span> file.content <span class="keyword">or</span> file.sha
               <span class="literal">true</span>
             <span class="keyword">else</span>
               console.warn <span class="string">"Blank content for: "</span>, file
