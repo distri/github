@@ -246,7 +246,8 @@ The subset of data appropriate to push to github.
 
     cleanTree = (data) ->
       data.map (datum) ->
-        if datum.initialSha is datum.sha
+        # TODO: This SHA biz should be coordinated with filetree better
+        if datum.sha and (datum.initialSha is datum.sha)
           _.pick datum, "path", "mode", "type", "sha" 
         else
           _.pick datum, "path", "mode", "type", "content"
