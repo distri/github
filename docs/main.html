@@ -18,9 +18,11 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              
+              <h1 id="github">Github</h1>
+
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">Repository = require <span class="string">"./repository"</span></code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">
+</code></pre>
 </div>
         </li>
         
@@ -29,6 +31,21 @@
             <div class="annotation">
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript">Repository = require <span class="string">"./repository"</span>
+Observable = require <span class="string">"observable"</span>
+
+{defaults, extend} = require <span class="string">"./lib/util"</span></code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>Github handles our connections to the Github API. May be optionally passed a
 promise that when fulfilled will set the authorization token.</p>
@@ -39,10 +56,10 @@ promise that when fulfilled will set the authorization token.</p>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Our OAuth token for making API requests. We can still make anonymous requests
 without it.</p>
@@ -56,10 +73,10 @@ without it.</p>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Hold an observable for the last request so we can track things like oauth scopes
 and rate limit.</p>
@@ -70,10 +87,10 @@ and rate limit.</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Make a call to the github API. The path can be either a relative path such as
 <code>users/STRd6</code> or an absolute path like <code>https://api.github.com/users/octocat</code> or
@@ -93,7 +110,7 @@ and rate limit.</p>
     <span class="keyword">if</span> token
       options.headers[<span class="string">"Authorization"</span>] = <span class="string">"token <span class="subst">#{token}</span>"</span>
 
-    options = Object.extend
+    options = extend
       url: url
       type: <span class="string">"GET"</span>
       dataType: <span class="string">'json'</span>
@@ -103,10 +120,10 @@ and rate limit.</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Perform the ajax call and observe requests on success or failure</p>
 
@@ -118,10 +135,10 @@ and rate limit.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Publicly expose <code>api</code> method.</p>
 
@@ -131,10 +148,10 @@ and rate limit.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p><code>markdown</code> takes a string of source and returns a promise that will complete with
 the rendered markdown by posting it to Github.</p>
@@ -146,10 +163,10 @@ the rendered markdown by posting it to Github.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Also expose <code>lastRequest</code>.</p>
 
@@ -159,10 +176,10 @@ the rendered markdown by posting it to Github.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-11">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Getter/Setter for auth token.</p>
 
@@ -176,10 +193,10 @@ the rendered markdown by posting it to Github.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-12">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Expose the <code>Repository</code> constructor so that others can create repositories from
 raw data.</p>
@@ -187,7 +204,7 @@ raw data.</p>
             </div>
             <div class="content"><pre><code class="lang-coffeescript">  Repository: (data={}) -&gt;
     <span class="comment"># Use our api for the repository</span>
-    Object.defaults data,
+    defaults data,
       requester: api
 
     Repository(data)</code></pre>
@@ -195,10 +212,10 @@ raw data.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-13">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Get a repository, returns a promise that will have a repository one day.</p>
 
@@ -210,7 +227,7 @@ raw data.</p>
 
     api(<span class="string">"repos/<span class="subst">#{fullName}</span>"</span>)
     .<span class="keyword">then</span> (data) -&gt;
-      Object.defaults data,
+      defaults data,
         requester: api
 
       Repository(data)</code></pre>
@@ -218,10 +235,10 @@ raw data.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-14">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Expose <code>authorizationUrl</code> to instances as well.</p>
 
@@ -231,10 +248,10 @@ raw data.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-15">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>A URL that will authorize a user with the specified scope for the given app.</p>
 
@@ -248,19 +265,142 @@ module.exports = Github</code></pre>
         
     </ul>
   </div>
-  <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script src="http://strd6.github.io/require/v0.2.2.js"></script>
-<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js"></script><script>
-  $.ajax({
-    url: "http://strd6.github.io/interactive/v0.8.1.jsonp",
-    dataType: "jsonp",
-    jsonpCallback: "STRd6/interactive:v0.8.1",
-    cache: true
-  }).then(function(PACKAGE) {
-    Require.generateFor(PACKAGE)("./" + PACKAGE.entryPoint)
-  })
+  <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
+  (function() {
+  var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
+
+  createEditor = function(code, shebang, section) {
+    var annotationElement, contentElement, editorElement, exampleSection, runtimeElement;
+    exampleSection = $("<li>", {
+      "class": "example"
+    });
+    annotationElement = $("<div>", {
+      "class": "annotation"
+    });
+    editorElement = $("<textarea>", {
+      "class": "annotation",
+      text: code
+    });
+    contentElement = $("<div>", {
+      "class": "content"
+    });
+    runtimeElement = $("<div>", {
+      "class": "output"
+    });
+    contentElement.append(runtimeElement);
+    annotationElement.append(editorElement);
+    exampleSection.append(annotationElement);
+    exampleSection.append(contentElement);
+    section.after(exampleSection);
+    return bindUpdates(shebang, editorElement, runtimeElement);
+  };
+
+  bindUpdates = function(shebang, editorElement, runtimeElement) {
+    return editorElement.on("keyup", function() {
+      var e, report, source;
+      report = ErrorReporter(editorElement);
+      source = editorElement.val();
+      try {
+        runners[shebang]({
+          editorElement: editorElement,
+          source: source,
+          runtimeElement: runtimeElement
+        });
+        return report.clear();
+      } catch (_error) {
+        e = _error;
+        return report(e);
+      }
+    });
+  };
+
+  readShebang = function(source) {
+    var match;
+    if (match = source.match(/^\#\! (.*)\n/)) {
+      return match[1];
+    }
+  };
+
+  ErrorReporter = function(editor) {
+    var reporter;
+    reporter = function(error) {
+      var errorParagraph;
+      if (editor.next().is("p.error")) {
+        return editor.next().text(error);
+      } else {
+        errorParagraph = $("<p>", {
+          "class": "error",
+          text: error.toString()
+        });
+        return editor.after(errorParagraph);
+      }
+    };
+    reporter.clear = function() {
+      if (editor.next().is("p.error")) {
+        return editor.next().remove();
+      }
+    };
+    return reporter;
+  };
+
+  findInteractiveElements = function() {
+    return $("blockquote > pre > code").each(function() {
+      var blockQuoteElement, code, codeElement, sectionElement, shebang;
+      codeElement = $(this);
+      code = codeElement.text();
+      if (shebang = readShebang(code)) {
+        if (!runners[shebang]) {
+          return;
+        }
+        code = code.split("\n").slice(1).join("\n");
+        blockQuoteElement = codeElement.parent().parent();
+        sectionElement = blockQuoteElement.parent().parent();
+        blockQuoteElement.remove();
+        return createEditor(code, shebang, sectionElement);
+      }
+    });
+  };
+
+  runners = {};
+
+  (typeof window !== "undefined" && window !== null ? window : global).Interactive = {
+    register: function(name, runner) {
+      runners[name] = runner;
+      findInteractiveElements();
+      return $('#container').on('keyup', 'textarea', function() {
+        $(this).height(0);
+        return $(this).height(this.scrollHeight);
+      }).find('textarea').keyup();
+    }
+  };
+
+  exec = function(_arg) {
+    var code, editorElement, runtimeElement, source;
+    source = _arg.source, code = _arg.code, editorElement = _arg.editorElement, runtimeElement = _arg.runtimeElement;
+    runtimeElement.remove();
+    editorElement.replaceWith($("<pre>", {
+      text: source
+    }));
+    return setTimeout(function() {
+      return Function(code)();
+    }, 0);
+  };
+
+  $(function() {
+    Interactive.register("setup", function(params) {
+      params.code = CoffeeScript.compile(params.source);
+      return exec(params);
+    });
+    return Interactive.register("setup-js", function(params) {
+      params.code = params.source;
+      return exec(params);
+    });
+  });
+
+}).call(this);
+
 </script><script src="package.js"></script>
 </body>
 </html>

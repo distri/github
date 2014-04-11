@@ -38,7 +38,11 @@ data for the local working copy such as the current branch.</p>
 reporting.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">ApiGenerator = require(<span class="string">'./api_generator'</span>)</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript">ApiGenerator = require(<span class="string">'./api_generator'</span>)
+Composition = require <span class="string">"composition"</span>
+{defaults, extend} = require <span class="string">"./lib/util"</span>
+
+_ = require <span class="string">"./lib/underscore"</span></code></pre>
 </div>
         </li>
         
@@ -83,19 +87,28 @@ reporting.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">Repository</span></span> = (I={}) -&gt;
-  Object.defaults I,
-    branch: <span class="string">"master"</span>
-    defaultBranch: <span class="string">"master"</span>
+  defaults I,
+    branch: <span class="literal">null</span>
+    default_branch: <span class="string">"master"</span>
 
   <span class="comment"># Requester only matters runtime, not real data</span>
   <span class="comment"># TODO: This is kind of a hack</span>
   requester = I.requester
   <span class="keyword">delete</span> I.requester
 
+  self = Composition(I)
+
+  self.attrObservable Object.keys(I)...
+
   <span class="comment"># TODO: Think about converting underscored properties to camel case in an</span>
   <span class="comment"># automatic and consistent way.</span>
 
-  self = Model(I).observeAll()</code></pre>
+  self.<span class="function"><span class="title">defaultBranch</span></span> = -&gt;
+    I.default_branch
+
+  <span class="comment"># Initialize chosen branch to default branch</span>
+  <span class="keyword">unless</span> self.branch()
+    self.branch(self.defaultBranch())</code></pre>
 </div>
         </li>
         
@@ -113,7 +126,7 @@ reporting.</p>
 
   self.extend
     infoDisplay: -&gt;
-      <span class="string">"<span class="subst">#{I.fullName}</span> (<span class="subst">#{I.branch}</span>)"</span>
+      <span class="string">"<span class="subst">#{I.fullName}</span> (<span class="subst">#{self.branch()}</span>)"</span>
 
     pullRequests: -&gt;
       get <span class="string">"pulls"</span>
@@ -125,7 +138,7 @@ reporting.</p>
       .<span class="keyword">then</span>(self.commitEmpty)
       .<span class="keyword">then</span> -&gt;
         post <span class="string">"pulls"</span>,
-          base: I.defaultBranch
+          base: self.defaultBranch()
           head: head
           title: title
 
@@ -146,7 +159,7 @@ reporting.</p>
         $.<span class="keyword">when</span>.apply(<span class="literal">null</span>, files.map (datum) -&gt;
           get(datum.url)
           .<span class="keyword">then</span> (data) -&gt;
-            Object.extend(datum, data)
+            extend(datum, data)
         )
       .<span class="keyword">then</span> (results...) -&gt;
         results
@@ -168,13 +181,7 @@ reporting.</p>
         <span class="keyword">if</span> empty <span class="keyword">is</span> <span class="literal">true</span>
           Deferred().resolve(data.tree)
         <span class="keyword">else</span>
-          <span class="comment"># TODO: Github barfs when committing blank files</span>
-          tree = tree.filter (file) -&gt;
-            <span class="keyword">if</span> file.content
-              <span class="literal">true</span>
-            <span class="keyword">else</span>
-              console.warn <span class="string">"Blank content for: "</span>, file
-              <span class="literal">false</span>
+          tree = cleanTree(tree)
 
           post <span class="string">"git/trees"</span>,
             base_tree: baseTree
@@ -308,7 +315,7 @@ returns a promise that will be fullfilled if the publish branch is legit.</p>
       get(<span class="string">"branches/<span class="subst">#{publishBranch}</span>"</span>)
       .<span class="keyword">then</span> <span class="literal">null</span>, (request) -&gt;
         <span class="keyword">if</span> request.status <span class="keyword">is</span> <span class="number">404</span>
-          self.initPublishBranch()</code></pre>
+          self.initPublishBranch(publishBranch)</code></pre>
 </div>
         </li>
         
@@ -342,7 +349,7 @@ returns a promise that will be fullfilled if the publish branch is legit.</p>
               <p>Expose our API methods.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">  Object.extend self,
+            <div class="content"><pre><code class="lang-coffeescript">  extend self,
     get: get
     put: put
     post: post
@@ -381,21 +388,169 @@ module.exports = Repository</code></pre>
 </div>
         </li>
         
+        
+        <li id="section-15">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>The subset of data appropriate to push to github.</p>
+
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">cleanTree</span></span> = (data) -&gt;
+  data.map (datum) -&gt;
+    <span class="comment"># TODO: This SHA biz should be coordinated with filetree better</span>
+    <span class="keyword">if</span> datum.sha <span class="keyword">and</span> (datum.initialSha <span class="keyword">is</span> datum.sha)
+      _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"sha"</span> 
+    <span class="keyword">else</span>
+      _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"content"</span>
+  .filter (file) -&gt;
+    <span class="keyword">if</span> file.content <span class="keyword">or</span> file.sha
+      <span class="literal">true</span>
+    <span class="keyword">else</span>
+      console.warn <span class="string">"Blank content for: "</span>, file
+      <span class="literal">false</span></code></pre>
+</div>
+        </li>
+        
     </ul>
   </div>
-  <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script src="http://strd6.github.io/require/v0.2.2.js"></script>
-<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://strd6.github.io/tempest/javascripts/envweb-v0.4.5.js"></script><script>
-  $.ajax({
-    url: "http://strd6.github.io/interactive/v0.8.1.jsonp",
-    dataType: "jsonp",
-    jsonpCallback: "STRd6/interactive:v0.8.1",
-    cache: true
-  }).then(function(PACKAGE) {
-    Require.generateFor(PACKAGE)("./" + PACKAGE.entryPoint)
-  })
+  <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
+  (function() {
+  var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
+
+  createEditor = function(code, shebang, section) {
+    var annotationElement, contentElement, editorElement, exampleSection, runtimeElement;
+    exampleSection = $("<li>", {
+      "class": "example"
+    });
+    annotationElement = $("<div>", {
+      "class": "annotation"
+    });
+    editorElement = $("<textarea>", {
+      "class": "annotation",
+      text: code
+    });
+    contentElement = $("<div>", {
+      "class": "content"
+    });
+    runtimeElement = $("<div>", {
+      "class": "output"
+    });
+    contentElement.append(runtimeElement);
+    annotationElement.append(editorElement);
+    exampleSection.append(annotationElement);
+    exampleSection.append(contentElement);
+    section.after(exampleSection);
+    return bindUpdates(shebang, editorElement, runtimeElement);
+  };
+
+  bindUpdates = function(shebang, editorElement, runtimeElement) {
+    return editorElement.on("keyup", function() {
+      var e, report, source;
+      report = ErrorReporter(editorElement);
+      source = editorElement.val();
+      try {
+        runners[shebang]({
+          editorElement: editorElement,
+          source: source,
+          runtimeElement: runtimeElement
+        });
+        return report.clear();
+      } catch (_error) {
+        e = _error;
+        return report(e);
+      }
+    });
+  };
+
+  readShebang = function(source) {
+    var match;
+    if (match = source.match(/^\#\! (.*)\n/)) {
+      return match[1];
+    }
+  };
+
+  ErrorReporter = function(editor) {
+    var reporter;
+    reporter = function(error) {
+      var errorParagraph;
+      if (editor.next().is("p.error")) {
+        return editor.next().text(error);
+      } else {
+        errorParagraph = $("<p>", {
+          "class": "error",
+          text: error.toString()
+        });
+        return editor.after(errorParagraph);
+      }
+    };
+    reporter.clear = function() {
+      if (editor.next().is("p.error")) {
+        return editor.next().remove();
+      }
+    };
+    return reporter;
+  };
+
+  findInteractiveElements = function() {
+    return $("blockquote > pre > code").each(function() {
+      var blockQuoteElement, code, codeElement, sectionElement, shebang;
+      codeElement = $(this);
+      code = codeElement.text();
+      if (shebang = readShebang(code)) {
+        if (!runners[shebang]) {
+          return;
+        }
+        code = code.split("\n").slice(1).join("\n");
+        blockQuoteElement = codeElement.parent().parent();
+        sectionElement = blockQuoteElement.parent().parent();
+        blockQuoteElement.remove();
+        return createEditor(code, shebang, sectionElement);
+      }
+    });
+  };
+
+  runners = {};
+
+  (typeof window !== "undefined" && window !== null ? window : global).Interactive = {
+    register: function(name, runner) {
+      runners[name] = runner;
+      findInteractiveElements();
+      return $('#container').on('keyup', 'textarea', function() {
+        $(this).height(0);
+        return $(this).height(this.scrollHeight);
+      }).find('textarea').keyup();
+    }
+  };
+
+  exec = function(_arg) {
+    var code, editorElement, runtimeElement, source;
+    source = _arg.source, code = _arg.code, editorElement = _arg.editorElement, runtimeElement = _arg.runtimeElement;
+    runtimeElement.remove();
+    editorElement.replaceWith($("<pre>", {
+      text: source
+    }));
+    return setTimeout(function() {
+      return Function(code)();
+    }, 0);
+  };
+
+  $(function() {
+    Interactive.register("setup", function(params) {
+      params.code = CoffeeScript.compile(params.source);
+      return exec(params);
+    });
+    return Interactive.register("setup-js", function(params) {
+      params.code = params.source;
+      return exec(params);
+    });
+  });
+
+}).call(this);
+
 </script><script src="package.js"></script>
 </body>
 </html>
