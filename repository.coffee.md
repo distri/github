@@ -8,7 +8,7 @@ All of the methods return promises to allow for easy chaining and error
 reporting.
 
     ApiGenerator = require('./api_generator')
-    Composition = require "composition"
+    Composition = require "model"
     {defaults, extend} = require "./lib/util"
 
     _ = require "./lib/underscore"
@@ -248,7 +248,7 @@ The subset of data appropriate to push to github.
       data.map (datum) ->
         # TODO: This SHA biz should be coordinated with filetree better
         if datum.sha and (datum.initialSha is datum.sha)
-          _.pick datum, "path", "mode", "type", "sha" 
+          _.pick datum, "path", "mode", "type", "sha"
         else
           _.pick datum, "path", "mode", "type", "content"
       .filter (file) ->

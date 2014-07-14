@@ -1,8 +1,8 @@
-version: "0.4.3"
+version: "0.4.4-pre.0"
 remoteDependencies: [
   "https://code.jquery.com/jquery-1.11.0.min.js"
 ]
 dependencies:
   emojer: "STRd6/emojer:v0.2.0"
-  observable: "distri/observable:v0.1.1"
-  composition: "distri/compositions:v0.1.1"
+  observable: "distri/observable:v0.3.1"
+  model: "distri/model:v0.1.2"
