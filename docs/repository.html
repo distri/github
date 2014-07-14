@@ -39,7 +39,7 @@ reporting.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">ApiGenerator = require(<span class="string">'./api_generator'</span>)
-Composition = require <span class="string">"composition"</span>
+Composition = require <span class="string">"model"</span>
 {defaults, extend} = require <span class="string">"./lib/util"</span>
 
 _ = require <span class="string">"./lib/underscore"</span></code></pre>
@@ -401,7 +401,7 @@ module.exports = Repository</code></pre>
   data.map (datum) -&gt;
     <span class="comment"># TODO: This SHA biz should be coordinated with filetree better</span>
     <span class="keyword">if</span> datum.sha <span class="keyword">and</span> (datum.initialSha <span class="keyword">is</span> datum.sha)
-      _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"sha"</span> 
+      _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"sha"</span>
     <span class="keyword">else</span>
       _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"content"</span>
   .filter (file) -&gt;
