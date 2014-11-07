@@ -42,6 +42,8 @@ reporting.</p>
 Composition = require <span class="string">"model"</span>
 {defaults, extend} = require <span class="string">"./lib/util"</span>
 
+Q = require <span class="string">"q"</span>
+
 _ = require <span class="string">"./lib/underscore"</span></code></pre>
 </div>
         </li>
@@ -152,17 +154,14 @@ _ = require <span class="string">"./lib/underscore"</span></code></pre>
       .<span class="keyword">then</span> (data) -&gt;
         get <span class="string">"<span class="subst">#{data.tree.url}</span>?recursive=1"</span>
       .<span class="keyword">then</span> (data) -&gt;
-        files = data.tree.select (file) -&gt;
+        files = data.tree.filter (file) -&gt;
           file.type <span class="keyword">is</span> <span class="string">"blob"</span>
 
         <span class="comment"># Gather the data for each file</span>
-        $.<span class="keyword">when</span>.apply(<span class="literal">null</span>, files.map (datum) -&gt;
+        Q.all files.map (datum) -&gt;
           get(datum.url)
           .<span class="keyword">then</span> (data) -&gt;
             extend(datum, data)
-        )
-      .<span class="keyword">then</span> (results...) -&gt;
-        results
 
     commitTree: ({branch, message, baseTree, tree, empty}) -&gt;
       branch ?= self.branch()
