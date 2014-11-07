@@ -1,0 +1,12 @@
+CACHE MANIFEST
+# 1415334118832
+
+CACHE:
+index.html
+../v0.4.5.json.js
+https://code.jquery.com/jquery-1.11.0.min.js
+
+NETWORK:
+https://*
+http://*
+*
