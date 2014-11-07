@@ -10,6 +10,8 @@ reporting.
     ApiGenerator = require('./api_generator')
     Composition = require "model"
     {defaults, extend} = require "./lib/util"
+    
+    Q = require "q"
 
     _ = require "./lib/underscore"
 
@@ -83,17 +85,14 @@ Get api helper methods from the api generator. With them we can do things like
           .then (data) ->
             get "#{data.tree.url}?recursive=1"
           .then (data) ->
-            files = data.tree.select (file) ->
+            files = data.tree.filter (file) ->
               file.type is "blob"
 
             # Gather the data for each file
-            $.when.apply(null, files.map (datum) ->
+            Q.all files.map (datum) ->
               get(datum.url)
               .then (data) ->
                 extend(datum, data)
-            )
-          .then (results...) ->
-            results
 
         commitTree: ({branch, message, baseTree, tree, empty}) ->
           branch ?= self.branch()
