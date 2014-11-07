@@ -36,6 +36,7 @@
             </div>
             <div class="content"><pre><code class="lang-coffeescript">Repository = require <span class="string">"./repository"</span>
 Observable = require <span class="string">"observable"</span>
+Q = require <span class="string">"q"</span>
 
 {defaults, extend} = require <span class="string">"./lib/util"</span></code></pre>
 </div>
@@ -128,9 +129,9 @@ and rate limit.</p>
               <p>Perform the ajax call and observe requests on success or failure</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">    $.ajax(options).done (data, status, request) -&gt;
+            <div class="content"><pre><code class="lang-coffeescript">    Q($.ajax(options).done (data, status, request) -&gt;
       lastRequest(request)
-    .fail lastRequest</code></pre>
+    ).fail lastRequest</code></pre>
 </div>
         </li>
         

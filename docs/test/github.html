@@ -69,7 +69,11 @@ describe <span class="string">"Github"</span>, -&gt;
     it <span class="string">"should create a merge when asked"</span>, -&gt;
       expectUrlToMatch <span class="regexp">/STRd6\/testin\/merges/</span>
 
-      repository.mergeInto()</code></pre>
+      repository.mergeInto()
+
+  it <span class="string">"should expose an API method to make requests"</span>, (done) -&gt;
+    Github().api(<span class="string">"rate_limit"</span>).<span class="keyword">then</span> (data) -&gt;
+      done()</code></pre>
 </div>
         </li>
         
