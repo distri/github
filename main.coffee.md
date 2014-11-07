@@ -3,6 +3,7 @@ Github
 
     Repository = require "./repository"
     Observable = require "observable"
+    Q = require "q"
 
     {defaults, extend} = require "./lib/util"
 
@@ -52,9 +53,9 @@ We attach our `accessToken` if present.
 
 Perform the ajax call and observe requests on success or failure
 
-        $.ajax(options).done (data, status, request) ->
+        Q($.ajax(options).done (data, status, request) ->
           lastRequest(request)
-        .fail lastRequest
+        ).fail lastRequest
 
 Publicly expose `api` method.
 

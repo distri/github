@@ -40,3 +40,7 @@ Hacky way to test requests. We just see if it returns a URL that looks ok.
           expectUrlToMatch /STRd6\/testin\/merges/
 
           repository.mergeInto()
+
+      it "should expose an API method to make requests", (done) ->
+        Github().api("rate_limit").then (data) ->
+          done()
