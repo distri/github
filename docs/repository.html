@@ -178,7 +178,7 @@ _ = require <span class="string">"./lib/underscore"</span></code></pre>
           baseTree = data.tree.sha
 
         <span class="keyword">if</span> empty <span class="keyword">is</span> <span class="literal">true</span>
-          Deferred().resolve(data.tree)
+          <span class="keyword">return</span> data.tree
         <span class="keyword">else</span>
           tree = cleanTree(tree)
 
@@ -238,7 +238,7 @@ _ = require <span class="string">"./lib/underscore"</span></code></pre>
           self.createRef(ref)
           .<span class="keyword">then</span>(setBranch)
         <span class="keyword">else</span>
-          Deferred().reject(arguments...)
+          <span class="keyword">throw</span> request 
 
     mergeInto: (branch=self.defaultBranch()) -&gt;
       post <span class="string">"merges"</span>,
