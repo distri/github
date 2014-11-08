@@ -1,4 +1,4 @@
-version: "0.4.6"
+version: "0.4.7-pre.0"
 remoteDependencies: [
   "https://code.jquery.com/jquery-1.11.0.min.js"
 ]

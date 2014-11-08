@@ -10,7 +10,7 @@ reporting.
     ApiGenerator = require('./api_generator')
     Composition = require "model"
     {defaults, extend} = require "./lib/util"
-    
+
     Q = require "q"
 
     _ = require "./lib/underscore"
@@ -109,7 +109,7 @@ Get api helper methods from the api generator. With them we can do things like
               baseTree = data.tree.sha
 
             if empty is true
-              Deferred().resolve(data.tree)
+              return data.tree
             else
               tree = cleanTree(tree)
 
@@ -160,7 +160,7 @@ Creates ref (if it doesn't already exist) using our current branch as a base.
               self.createRef(ref)
               .then(setBranch)
             else
-              Deferred().reject(arguments...)
+              throw request 
 
         mergeInto: (branch=self.defaultBranch()) ->
           post "merges",
