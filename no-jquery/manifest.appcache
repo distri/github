@@ -1,0 +1,12 @@
+CACHE MANIFEST
+# 1455416763183
+
+CACHE:
+index.html
+../no-jquery.json.js
+
+
+NETWORK:
+https://*
+http://*
+*
