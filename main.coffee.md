@@ -1,9 +1,9 @@
 Github
 ======
 
-    Repository = require "./repository"
+    Ajax = require "ajax"
     Observable = require "observable"
-    Q = require "q"
+    Repository = require "./repository"
 
     {defaults, extend} = require "./lib/util"
 
@@ -11,6 +11,11 @@ Github handles our connections to the Github API. May be optionally passed a
 promise that when fulfilled will set the authorization token.
 
     Github = (tokenPromise) ->
+      lastRequest = Observable()
+
+      ajax = Ajax()
+      ajax.complete (e, xhr) ->
+        lastRequest xhr
 
 Our OAuth token for making API requests. We can still make anonymous requests
 without it.
@@ -19,11 +24,6 @@ without it.
 
       tokenPromise?.then (tokenValue) ->
         token = tokenValue
-
-Hold an observable for the last request so we can track things like oauth scopes
-and rate limit.
-
-      lastRequest = Observable()
 
 Make a call to the github API. The path can be either a relative path such as
 `users/STRd6` or an absolute path like `https://api.github.com/users/octocat` or
@@ -51,11 +51,7 @@ We attach our `accessToken` if present.
           contentType: "application/json; charset=utf-8"
         , options
 
-Perform the ajax call and observe requests on success or failure
-
-        Q($.ajax(options).done (data, status, request) ->
-          lastRequest(request)
-        ).fail lastRequest
+        ajax(options)
 
 Publicly expose `api` method.
 

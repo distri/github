@@ -7,11 +7,11 @@ string. The requester does the actual api calls, these just set it up easily.
     ApiGenerator = (root, requester) ->
 
 Configure the options for a request by stringifying any data to be added to the
-request body, and setting the appropriate type. `get` requests don't call this
-as the default type is `get` and they put their params in the querystring.
+request body, and setting the appropriate method. `get` requests don't call this
+as the default method is `get` and they put params in the querystring.
 
-      requestOptions = (type, data) ->
-        type: type
+      requestOptions = (method, data) ->
+        method: method
         data: JSON.stringify(data)
 
 If our request is absolute we use that url, otherwise we get the base url from

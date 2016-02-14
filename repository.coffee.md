@@ -160,7 +160,7 @@ Creates ref (if it doesn't already exist) using our current branch as a base.
               self.createRef(ref)
               .then(setBranch)
             else
-              throw request 
+              throw request
 
         mergeInto: (branch=self.defaultBranch()) ->
           post "merges",
