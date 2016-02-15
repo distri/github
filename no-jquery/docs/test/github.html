@@ -76,13 +76,24 @@ describe <span class="string">"Github"</span>, -&gt;
       done()
 
   it <span class="string">"should get some files"</span>, (done) -&gt;
-    <span class="property">@timeout</span> <span class="number">5000</span>
+    <span class="property">@timeout</span> <span class="number">2000</span>
     gh = Github()
 
     gh.repository(<span class="string">"STRd6/testin2"</span>)
     .<span class="keyword">then</span> (repo) -&gt;
       repo.latestContent().<span class="keyword">then</span> (data) -&gt;
-        done()</code></pre>
+        done()
+
+<span class="keyword">do</span> -&gt;
+  gh = Github()
+
+  button = document.createElement <span class="string">"button"</span>
+  button.innerText = <span class="string">"Test!"</span>
+  button.<span class="function"><span class="title">onclick</span></span> = -&gt;
+    gh.repository(<span class="string">"STRd6/testin2"</span>)
+    .<span class="keyword">then</span> (repo) -&gt;
+      repo.latestContent().<span class="keyword">then</span> (data) -&gt;
+  document.body.appendChild button</code></pre>
 </div>
         </li>
         

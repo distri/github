@@ -40,9 +40,7 @@ reporting.</p>
             </div>
             <div class="content"><pre><code class="lang-coffeescript">ApiGenerator = require(<span class="string">'./api_generator'</span>)
 Composition = require <span class="string">"model"</span>
-{defaults, extend} = require <span class="string">"./lib/util"</span>
-
-_ = require <span class="string">"./lib/underscore"</span></code></pre>
+{defaults, extend} = require <span class="string">"./lib/util"</span></code></pre>
 </div>
         </li>
         
@@ -380,11 +378,12 @@ module.exports = Repository</code></pre>
             </div>
             <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">cleanTree</span></span> = (data) -&gt;
   data.map (datum) -&gt;
+    {path, mode, type, sha, initialSha, content} = datum
     <span class="comment"># TODO: This SHA biz should be coordinated with filetree better</span>
-    <span class="keyword">if</span> datum.sha <span class="keyword">and</span> (datum.initialSha <span class="keyword">is</span> datum.sha)
-      _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"sha"</span>
+    <span class="keyword">if</span> sha <span class="keyword">and</span> (initialSha <span class="keyword">is</span> sha)
+      {path, mode, type, sha}
     <span class="keyword">else</span>
-      _.pick datum, <span class="string">"path"</span>, <span class="string">"mode"</span>, <span class="string">"type"</span>, <span class="string">"content"</span>
+      {path, mode, type, content}
   .filter (file) -&gt;
     <span class="keyword">if</span> file.content <span class="keyword">or</span> file.sha
       <span class="literal">true</span>

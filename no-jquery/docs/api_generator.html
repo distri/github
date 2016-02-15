@@ -76,8 +76,8 @@ easily.</p>
             </div>
             <div class="content"><pre><code class="lang-coffeescript">  api: api
 
-  get: (path, data) -&gt;
-    api path, data: data
+  get: (path) -&gt;
+    api path
 
   put: (path, data) -&gt;
     api(path, requestOptions(<span class="string">"PUT"</span>, data))
