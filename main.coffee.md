@@ -47,7 +47,7 @@ We attach our `accessToken` if present.
         options = extend
           url: url
           type: "GET"
-          dataType: 'json'
+          responseType: "json"
           contentType: "application/json; charset=utf-8"
         , options
 
@@ -56,13 +56,6 @@ We attach our `accessToken` if present.
 Publicly expose `api` method.
 
       api: api
-
-`markdown` takes a string of source and returns a promise that will complete with
-the rendered markdown by posting it to Github.
-
-See also: http://developer.github.com/v3/markdown/
-
-      markdown: require('./markdown')(api)
 
 Also expose `lastRequest`.
 
@@ -92,6 +85,8 @@ Get a repository, returns a promise that will have a repository one day.
         # TODO: Consider returning a repository proxy immediately
         #   may need to be weighed carefully with the tradeoffs of observables.
         # TODO: Consider creating from a full url in addition to a full name.
+
+        debugger
 
         api("repos/#{fullName}")
         .then (data) ->

@@ -30,8 +30,8 @@ Expose the basic api method in our returned object.
 
       api: api
 
-      get: (path, data) ->
-        api path, data: data
+      get: (path) ->
+        api path
 
       put: (path, data) ->
         api(path, requestOptions("PUT", data))

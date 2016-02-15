@@ -11,8 +11,6 @@ reporting.
     Composition = require "model"
     {defaults, extend} = require "./lib/util"
 
-    _ = require "./lib/underscore"
-
 Constructor
 -----------
 
@@ -236,11 +234,12 @@ The subset of data appropriate to push to github.
 
     cleanTree = (data) ->
       data.map (datum) ->
+        {path, mode, type, sha, initialSha, content} = datum
         # TODO: This SHA biz should be coordinated with filetree better
-        if datum.sha and (datum.initialSha is datum.sha)
-          _.pick datum, "path", "mode", "type", "sha"
+        if sha and (initialSha is sha)
+          {path, mode, type, sha}
         else
-          _.pick datum, "path", "mode", "type", "content"
+          {path, mode, type, content}
       .filter (file) ->
         if file.content or file.sha
           true

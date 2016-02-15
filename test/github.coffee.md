@@ -46,10 +46,21 @@ Hacky way to test requests. We just see if it returns a URL that looks ok.
           done()
 
       it "should get some files", (done) ->
-        @timeout 5000
+        @timeout 2000
         gh = Github()
 
         gh.repository("STRd6/testin2")
         .then (repo) ->
           repo.latestContent().then (data) ->
             done()
+
+    do ->
+      gh = Github()
+  
+      button = document.createElement "button"
+      button.innerText = "Test!"
+      button.onclick = ->
+        gh.repository("STRd6/testin2")
+        .then (repo) ->
+          repo.latestContent().then (data) ->
+      document.body.appendChild button
