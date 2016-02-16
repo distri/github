@@ -32,7 +32,7 @@ window["distri/github:no-jquery"]({
     },
     "pixie.cson": {
       "path": "pixie.cson",
-      "content": "version: \"0.5.0-pre.3\"\ndependencies:\n  ajax: \"distri/ajax:v0.1.3\"\n  model: \"distri/model:v0.1.3\"\n  observable: \"distri/observable:v0.3.1\"\n",
+      "content": "version: \"0.5.0\"\ndependencies:\n  ajax: \"distri/ajax:v0.1.3\"\n  model: \"distri/model:v0.1.3\"\n  observable: \"distri/observable:v0.3.1\"\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -67,7 +67,7 @@ window["distri/github:no-jquery"]({
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.5.0-pre.3\",\"dependencies\":{\"ajax\":\"distri/ajax:v0.1.3\",\"model\":\"distri/model:v0.1.3\",\"observable\":\"distri/observable:v0.3.1\"}};",
+      "content": "module.exports = {\"version\":\"0.5.0\",\"dependencies\":{\"ajax\":\"distri/ajax:v0.1.3\",\"model\":\"distri/model:v0.1.3\",\"observable\":\"distri/observable:v0.3.1\"}};",
       "type": "blob"
     },
     "repository": {
@@ -84,7 +84,7 @@ window["distri/github:no-jquery"]({
   "progenitor": {
     "url": "https://danielx.net/editor/"
   },
-  "version": "0.5.0-pre.3",
+  "version": "0.5.0",
   "entryPoint": "main",
   "repository": {
     "branch": "no-jquery",
