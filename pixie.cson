@@ -1,4 +1,4 @@
-version: "0.5.1-pre.0"
+version: "0.5.1"
 dependencies:
   ajax: "distri/ajax:v0.1.4"
   model: "distri/model:v0.1.3"
