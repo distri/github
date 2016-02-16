@@ -308,12 +308,13 @@ returns a promise that will be fullfilled if the publish branch is legit.</p>
 <code>gh-pages</code> branch after making sure that branch exists.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">    publish: (tree, ref=self.branch(), publishBranch=self.publishBranch()) -&gt;
+            <div class="content"><pre><code class="lang-coffeescript">    publish: (tree, message, ref=self.branch(), publishBranch=self.publishBranch()) -&gt;
       message = <span class="string">"Updated at https://danielx.net/editor/"</span>
 
       self.ensurePublishBranch(publishBranch).<span class="keyword">then</span> -&gt;
         self.commitTree
           baseTree: <span class="literal">true</span>
+          message: message
           tree: tree
           branch: publishBranch</code></pre>
 </div>
