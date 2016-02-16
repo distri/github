@@ -203,12 +203,13 @@ returns a promise that will be fullfilled if the publish branch is legit.
 Publish our package for distribution by taking a tree and adding it to the
 `gh-pages` branch after making sure that branch exists.
 
-        publish: (tree, ref=self.branch(), publishBranch=self.publishBranch()) ->
+        publish: (tree, message, ref=self.branch(), publishBranch=self.publishBranch()) ->
           message = "Updated at https://danielx.net/editor/"
 
           self.ensurePublishBranch(publishBranch).then ->
             self.commitTree
               baseTree: true
+              message: message
               tree: tree
               branch: publishBranch
 

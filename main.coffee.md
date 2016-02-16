@@ -86,8 +86,6 @@ Get a repository, returns a promise that will have a repository one day.
         #   may need to be weighed carefully with the tradeoffs of observables.
         # TODO: Consider creating from a full url in addition to a full name.
 
-        debugger
-
         api("repos/#{fullName}")
         .then (data) ->
           defaults data,
