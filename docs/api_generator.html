@@ -34,12 +34,12 @@ string. The requester does the actual api calls, these just set it up easily.</p
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
               <p>Configure the options for a request by stringifying any data to be added to the
-request body, and setting the appropriate type. <code>get</code> requests don&#39;t call this
-as the default type is <code>get</code> and they put their params in the querystring.</p>
+request body, and setting the appropriate method. <code>get</code> requests don&#39;t call this
+as the default method is <code>get</code> and they put params in the querystring.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">  <span class="function"><span class="title">requestOptions</span></span> = (type, data) -&gt;
-    type: type
+            <div class="content"><pre><code class="lang-coffeescript">  <span class="function"><span class="title">requestOptions</span></span> = (method, data) -&gt;
+    method: method
     data: JSON.stringify(data)</code></pre>
 </div>
         </li>
@@ -76,8 +76,8 @@ easily.</p>
             </div>
             <div class="content"><pre><code class="lang-coffeescript">  api: api
 
-  get: (path, data) -&gt;
-    api path, data: data
+  get: (path) -&gt;
+    api path
 
   put: (path, data) -&gt;
     api(path, requestOptions(<span class="string">"PUT"</span>, data))
@@ -110,8 +110,7 @@ module.exports = ApiGenerator</code></pre>
     </ul>
   </div>
   <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script><script>
   (function() {
   var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
 

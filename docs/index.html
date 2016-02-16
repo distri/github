@@ -34,9 +34,9 @@
               </div>
               
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">Repository = require <span class="string">"./repository"</span>
+            <div class="content"><pre><code class="lang-coffeescript">Ajax = require <span class="string">"ajax"</span>
 Observable = require <span class="string">"observable"</span>
-Q = require <span class="string">"q"</span>
+Repository = require <span class="string">"./repository"</span>
 
 {defaults, extend} = require <span class="string">"./lib/util"</span></code></pre>
 </div>
@@ -52,7 +52,12 @@ Q = require <span class="string">"q"</span>
 promise that when fulfilled will set the authorization token.</p>
 
             </div>
-            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">Github</span></span> = (tokenPromise) -&gt;</code></pre>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">Github</span></span> = (tokenPromise) -&gt;
+  lastRequest = Observable()
+
+  ajax = Ajax()
+  ajax.complete (e, xhr) -&gt;
+    lastRequest xhr</code></pre>
 </div>
         </li>
         
@@ -79,20 +84,6 @@ without it.</p>
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>Hold an observable for the last request so we can track things like oauth scopes
-and rate limit.</p>
-
-            </div>
-            <div class="content"><pre><code class="lang-coffeescript">  lastRequest = Observable()</code></pre>
-</div>
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
               <p>Make a call to the github API. The path can be either a relative path such as
 <code>users/STRd6</code> or an absolute path like <code>https://api.github.com/users/octocat</code> or
 <code>user.url</code>.</p>
@@ -114,32 +105,19 @@ and rate limit.</p>
     options = extend
       url: url
       type: <span class="string">"GET"</span>
-      dataType: <span class="string">'json'</span>
+      responseType: <span class="string">"json"</span>
       contentType: <span class="string">"application/json; charset=utf-8"</span>
-    , options</code></pre>
-</div>
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Perform the ajax call and observe requests on success or failure</p>
+    , options
 
-            </div>
-            <div class="content"><pre><code class="lang-coffeescript">    Q($.ajax(options).done (data, status, request) -&gt;
-      lastRequest(request)
-    ).fail lastRequest</code></pre>
+    ajax(options)</code></pre>
 </div>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-6">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Publicly expose <code>api</code> method.</p>
 
@@ -149,25 +127,10 @@ and rate limit.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-7">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p><code>markdown</code> takes a string of source and returns a promise that will complete with
-the rendered markdown by posting it to Github.</p>
-<p>See also: <a href="http://developer.github.com/v3/markdown/">http://developer.github.com/v3/markdown/</a></p>
-
-            </div>
-            <div class="content"><pre><code class="lang-coffeescript">  markdown: require(<span class="string">'./markdown'</span>)(api)</code></pre>
-</div>
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Also expose <code>lastRequest</code>.</p>
 
@@ -177,10 +140,10 @@ the rendered markdown by posting it to Github.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-8">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Getter/Setter for auth token.</p>
 
@@ -194,10 +157,10 @@ the rendered markdown by posting it to Github.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-9">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Expose the <code>Repository</code> constructor so that others can create repositories from
 raw data.</p>
@@ -213,10 +176,10 @@ raw data.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-10">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Get a repository, returns a promise that will have a repository one day.</p>
 
@@ -236,10 +199,10 @@ raw data.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-11">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Expose <code>authorizationUrl</code> to instances as well.</p>
 
@@ -249,10 +212,10 @@ raw data.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-12">
             <div class="annotation">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>A URL that will authorize a user with the specified scope for the given app.</p>
 
@@ -267,8 +230,7 @@ module.exports = Github</code></pre>
     </ul>
   </div>
   <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script><script>
   (function() {
   var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
 

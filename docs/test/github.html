@@ -74,25 +74,22 @@ describe <span class="string">"Github"</span>, -&gt;
   it <span class="string">"should expose an API method to make requests"</span>, (done) -&gt;
     Github().api(<span class="string">"rate_limit"</span>).<span class="keyword">then</span> (data) -&gt;
       done()
-    .done()
 
   it <span class="string">"should get some files"</span>, (done) -&gt;
-    <span class="property">@timeout</span> <span class="number">5000</span>
+    <span class="property">@timeout</span> <span class="number">2000</span>
     gh = Github()
 
     gh.repository(<span class="string">"STRd6/testin2"</span>)
     .<span class="keyword">then</span> (repo) -&gt;
       repo.latestContent().<span class="keyword">then</span> (data) -&gt;
-        done()
-    .done()</code></pre>
+        done()</code></pre>
 </div>
         </li>
         
     </ul>
   </div>
   <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script><script>
   (function() {
   var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
 
