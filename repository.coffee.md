@@ -11,17 +11,6 @@ reporting.
     Composition = require "model"
     {defaults, extend} = require "./lib/util"
 
-    Q = require "q"
-
-    _ = require "./lib/underscore"
-
-An emoji generator to make commits pop!
-
-    emojer = require "emojer"
-
-    emojis = ->
-      "#{emojer()}#{emojer()}"
-
 Constructor
 -----------
 
@@ -89,14 +78,14 @@ Get api helper methods from the api generator. With them we can do things like
               file.type is "blob"
 
             # Gather the data for each file
-            Q.all files.map (datum) ->
+            Promise.all files.map (datum) ->
               get(datum.url)
               .then (data) ->
                 extend(datum, data)
 
         commitTree: ({branch, message, baseTree, tree, empty}) ->
           branch ?= self.branch()
-          message ?= "#{emojis()} Updated in browser at strd6.github.io/editor"
+          message ?= "Updated at https://danielx.net/editor/"
 
           # TODO: Is there a cleaner way to pass this through promises?
           latestCommitSha = null
@@ -160,7 +149,7 @@ Creates ref (if it doesn't already exist) using our current branch as a base.
               self.createRef(ref)
               .then(setBranch)
             else
-              throw request 
+              throw request
 
         mergeInto: (branch=self.defaultBranch()) ->
           post "merges",
@@ -193,7 +182,7 @@ the branch referencing that commit.
             }]
           .then (data) ->
             post "git/commits",
-              message: "Initial commit #{emojis()}"
+              message: "Initial commit"
               tree: data.sha
           .then (data) ->
             # Create the branch from the base commit
@@ -214,12 +203,11 @@ returns a promise that will be fullfilled if the publish branch is legit.
 Publish our package for distribution by taking a tree and adding it to the
 `gh-pages` branch after making sure that branch exists.
 
-        publish: (tree, ref=self.branch(), publishBranch=self.publishBranch()) ->
-          message = "#{emojis()} Built #{ref} in browser in strd6.github.io/editor"
-
+        publish: (tree, message, publishBranch=self.publishBranch()) ->
           self.ensurePublishBranch(publishBranch).then ->
             self.commitTree
               baseTree: true
+              message: message
               tree: tree
               branch: publishBranch
 
@@ -245,11 +233,12 @@ The subset of data appropriate to push to github.
 
     cleanTree = (data) ->
       data.map (datum) ->
+        {path, mode, type, sha, initialSha, content} = datum
         # TODO: This SHA biz should be coordinated with filetree better
-        if datum.sha and (datum.initialSha is datum.sha)
-          _.pick datum, "path", "mode", "type", "sha"
+        if sha and (initialSha is sha)
+          {path, mode, type, sha}
         else
-          _.pick datum, "path", "mode", "type", "content"
+          {path, mode, type, content}
       .filter (file) ->
         if file.content or file.sha
           true

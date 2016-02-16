@@ -44,14 +44,12 @@ Hacky way to test requests. We just see if it returns a URL that looks ok.
       it "should expose an API method to make requests", (done) ->
         Github().api("rate_limit").then (data) ->
           done()
-        .done()
 
       it "should get some files", (done) ->
-        @timeout 5000
+        @timeout 2000
         gh = Github()
-        
+
         gh.repository("STRd6/testin2")
         .then (repo) ->
           repo.latestContent().then (data) ->
             done()
-        .done()
