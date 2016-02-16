@@ -204,8 +204,6 @@ Publish our package for distribution by taking a tree and adding it to the
 `gh-pages` branch after making sure that branch exists.
 
         publish: (tree, message, publishBranch=self.publishBranch()) ->
-          message = "Updated at https://danielx.net/editor/"
-
           self.ensurePublishBranch(publishBranch).then ->
             self.commitTree
               baseTree: true
