@@ -198,7 +198,7 @@
     },
     "pixie.cson": {
       "path": "pixie.cson",
-      "content": "version: \"0.4.7\"\ndependencies:\n  ajax: \"distri/ajax:v0.1.3\"\n  model: \"distri/model:v0.1.3\"\n  observable: \"distri/observable:v0.3.1\"\n",
+      "content": "version: \"0.5.0-pre.0\"\ndependencies:\n  ajax: \"distri/ajax:v0.1.3\"\n  model: \"distri/model:v0.1.3\"\n  observable: \"distri/observable:v0.3.1\"\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -233,7 +233,7 @@
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"version\":\"0.4.7\",\"dependencies\":{\"ajax\":\"distri/ajax:v0.1.3\",\"model\":\"distri/model:v0.1.3\",\"observable\":\"distri/observable:v0.3.1\"}};",
+      "content": "module.exports = {\"version\":\"0.5.0-pre.0\",\"dependencies\":{\"ajax\":\"distri/ajax:v0.1.3\",\"model\":\"distri/model:v0.1.3\",\"observable\":\"distri/observable:v0.3.1\"}};",
       "type": "blob"
     },
     "repository": {
@@ -250,7 +250,7 @@
   "progenitor": {
     "url": "https://danielx.net/editor/"
   },
-  "version": "0.4.7",
+  "version": "0.5.0-pre.0",
   "entryPoint": "main",
   "repository": {
     "branch": "no-jquery",
