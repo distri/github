@@ -309,8 +309,6 @@ returns a promise that will be fullfilled if the publish branch is legit.</p>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">    publish: (tree, message, publishBranch=self.publishBranch()) -&gt;
-      message = <span class="string">"Updated at https://danielx.net/editor/"</span>
-
       self.ensurePublishBranch(publishBranch).<span class="keyword">then</span> -&gt;
         self.commitTree
           baseTree: <span class="literal">true</span>
