@@ -87,7 +87,7 @@
   "version": "0.5.1",
   "entryPoint": "main",
   "repository": {
-    "branch": "master",
+    "branch": "v0.5.1",
     "default_branch": "master",
     "full_name": "distri/github",
     "homepage": null,
