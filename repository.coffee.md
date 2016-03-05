@@ -67,7 +67,10 @@ Get api helper methods from the api generator. With them we can do things like
         latestCommit: (branch=self.branch()) ->
           get("git/refs/heads/#{branch}#{cacheBuster()}")
           .then (data) ->
-            get data.object.url
+            if Array.isArray data
+              throw status: 404
+            else
+              get data.object.url
 
         latestContent: (branch=self.branch()) ->
           self.latestCommit(branch)
@@ -141,8 +144,14 @@ Creates ref (if it doesn't already exist) using our current branch as a base.
             return data
 
           get("git/#{ref}")
-          .then setBranch # Success
-          , (request) -> # Failure
+          .then (result) ->
+            # As an undocument "feature" GH returns an array of heads matching a
+            # prefix if no exact match is found
+            if Array.isArray result
+              throw status: 404
+            else
+              setBranch(result) # Success
+          .catch (request) -> # Failure
             branchNotFound = (request.status is 404)
 
             if branchNotFound
