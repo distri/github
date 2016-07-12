@@ -2,7 +2,7 @@ Github
 ======
 
     Ajax = require "ajax"
-    Observable = require "observable"
+    {Observable} = require "model"
     Repository = require "./repository"
 
     {defaults, extend} = require "./lib/util"
